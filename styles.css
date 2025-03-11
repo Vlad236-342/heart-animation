@@ -1,0 +1,107 @@
+:root {
+    --heart-red-light: #ff1a1a;
+    --heart-red-dark: #b30000;
+    --bg-gradient-start: #ffdde1;
+    --bg-gradient-end: #ee9ca7;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+    margin: 0;
+    perspective: 1000px;
+    flex-direction: column;
+}
+
+.heart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.heart {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, var(--heart-red-light), var(--heart-red-dark));
+    position: relative;
+    transform: rotate(-45deg) translateZ(20px);
+    box-shadow: 
+        -10px 10px 20px var(--shadow-color), 
+        10px -10px 20px rgba(255, 0, 0, 0.5);
+    animation: pulse 1.5s infinite ease-in-out, glow 2s infinite ease-in-out;
+}
+
+/* Полукруги для сердца */
+.heart::before,
+.heart::after {
+    content: "";
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* Левый полукруг */
+.heart::before {
+    background: linear-gradient(45deg, var(--heart-red-light), var(--heart-red-dark));
+    top: -100px;
+    left: 0;
+}
+
+/* Правый полукруг (ярче) */
+.heart::after {
+    background: linear-gradient(45deg, #ff0000, var(--heart-red-dark));
+    left: 100px;
+    top: 0;
+}
+
+/* Тень под сердцем */
+.shadow {
+    position: absolute;
+    width: 120px;
+    height: 30px;
+    background: var(--shadow-color);
+    border-radius: 50%;
+    bottom: -40px;
+    filter: blur(15px);
+    animation: shadow-pulse 1.5s infinite ease-in-out;
+}
+
+/* Анимации */
+@keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(-45deg) translateZ(20px); }
+    50% { transform: scale(1.15) rotate(-45deg) translateZ(25px); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
+    50% { box-shadow: 0 0 30px rgba(255, 0, 0, 1); }
+    100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
+}
+
+@keyframes shadow-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* Надпись под сердцем */
+.text {
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+    margin-top: 80px; /* Увеличенный отступ */
+    text-align: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
